@@ -6,6 +6,8 @@ group :development,:test do
 	gem 'mysql2'
 	gem 'rspec-rails', '2.13.1' #rspec
 	gem 'guard-rspec', '2.5.0' #guard
+	gem 'bootstrap-sass', '2.3.2.0' #css
+	gem 'sprockets', '2.11.0' #css
 end
 
 group :test do
