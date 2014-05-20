@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.0.4'
+gem 'bcrypt-ruby', '3.1.2' #hashed password
 
 group :development,:test do
 	gem 'mysql2'
@@ -8,6 +9,7 @@ group :development,:test do
 	gem 'guard-rspec', '2.5.0' #guard
 	gem 'bootstrap-sass', '2.3.2.0' #css
 	gem 'sprockets', '2.11.0' #css
+
 end
 
 group :test do
