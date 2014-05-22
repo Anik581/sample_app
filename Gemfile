@@ -16,6 +16,7 @@ group :test do
 	gem 'selenium-webdriver', '2.35.1' #rspec
 	gem 'capybara', '2.1.0'	#rspec
 	gem 'libnotify', '0.8.0' #guard
+	gem 'factory_girl_rails', '4.2.1'
 end
 
 
