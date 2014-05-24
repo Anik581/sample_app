@@ -61,7 +61,7 @@ describe User do
   end
 
   describe "email address with mixed case" do
-		let( :mixed_case_email ) { "581AnIk@gMaIl.pL" }
+		let( :mixed_case_email ) { "TeStEr@O2.pL" }
 
 		it "should be saved as all low-case" do
 			@user.email = mixed_case_email
