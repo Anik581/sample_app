@@ -18,4 +18,29 @@ describe "User Pages" do
 			it { should have_title(user.name) }
 	end
 
+	describe "singup" do
+		before { visit singup_path }
+
+		let(:submit) { "Create my acount" }
+
+		describe "with invalid information" do
+			it "should not create a user" do
+				expect( click_button submit ).to_not change(User, :count)
+			end
+		end
+
+		describe "with valid information" do
+			before do
+				fill_in "Name",					with: "Tester"
+				fill_in "Email",				with: "tester@o2.pl"
+				fill_in "Password",			with: "123456"
+				fill_in "Confirmation",	with: "123456"
+			end
+
+			it "should create a user" do
+				expect( click_button submit).to eq chnge(User, :count).by(1)
+			end
+		end
+	end
+				
 end
