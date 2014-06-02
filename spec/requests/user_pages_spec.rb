@@ -18,14 +18,14 @@ describe "User Pages" do
 			it { should have_title(user.name) }
 	end
 
-	describe "singup" do
-		before { visit singup_path }
+	describe "signup" do
+		before { visit signup_path }
 
-		let(:submit) { "Create my acount" }
+		let(:submit) { "Create my account" }
 
 		describe "with invalid information" do
 			it "should not create a user" do
-				expect( click_button submit ).to_not change(User, :count)
+				expect { click_button submit }.to_not change(User, :count)
 			end
 		end
 
@@ -38,7 +38,7 @@ describe "User Pages" do
 			end
 
 			it "should create a user" do
-				expect( click_button submit).to eq chnge(User, :count).by(1)
+				expect { click_button submit }.to change(User, :count).by(1)
 			end
 		end
 	end
