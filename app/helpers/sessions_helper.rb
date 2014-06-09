@@ -20,4 +20,10 @@ module SessionsHelper
 		@curent_user ||= User.find_by(remember_token: remember_token)
 	end
 
+	def sign_out
+		current_user.update_attribute(:remember_token, User.digest(User.new_remember_token))
+		cookie.delete(:remember_token)
+		#self.current_user = nil #optional - if sign_out (in session_controller) without redirect
+	end
+	
 end
