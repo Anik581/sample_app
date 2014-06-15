@@ -22,17 +22,13 @@ require 'spec_helper'
 
 			describe "after visiting another page" do
 				before { click_link "Home" }
-				it {should_not have_selector('div.alert.alert-error') }
+				it {should_not have_selector('div.alert.alert-error', text: 'Invalid') }
 			end
 		end
 
-		describe "when valid information" do
+		describe "with valid information" do
 			let(:user) { FactoryGirl.create(:user) }
-			before do
-				fill_in "Email", 				with: user.email.upcase
-				fill_in "Password",			with: user.password
-				click_button "Sign in"
-			end
+			before { valid_signin(user) } #helper in support/untilities
 
 			it { should have_title(user.name) }
 			it { should have_link('Profile',			href: user_path(user)) }
@@ -43,6 +39,7 @@ require 'spec_helper'
 				before { click_link "Sign out" }
 				it { should have_link('Sign in') }
 			end
+
 		end
 	end
 
