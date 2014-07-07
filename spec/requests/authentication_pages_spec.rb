@@ -32,6 +32,7 @@ describe "Authentication" do
 			#before { valid_signin(user) } #shortcut #helper in support/untilities
 
 			it { should have_title(user.name) }
+			it { should have_link('Users',				href: users_path) }
 			it { should have_link('Profile',			href: user_path(user)) }
 			it { should have_link('Settings',			href: edit_user_path(user)) }
 			it { should have_link('Sign out', 		href: signout_path) }
@@ -59,8 +60,14 @@ describe "Authentication" do
 
 				describe "submitting to the update action" do
 					before { patch user_path(user) }
+
 					specify { expect(response).to redirect_to(signin_path) }
 				end
+
+				describe "visiting the user index"
+					before { visit users_path }
+
+					it { should have_title('Sign in') }
 			end
 
 			describe "when attempting to visit a protect pages" do
@@ -88,12 +95,14 @@ describe "Authentication" do
 
 		describe "submitting a GET request to the users#edit action" do
 			before { get edit_user_path(wrong_user) }
+
 			specify { expect(response.body).not_to match(full_title('Edit user')) }
 			specify { expect(response).to redirect_to(root_url) }
 		end
 
 		describe "submitting a PATCH request to the user#update action" do
 			before { patch user_path(wrong_user) }
+
 			specify { expect(response).to redirect_to(root_url) }
 		end
 	end
