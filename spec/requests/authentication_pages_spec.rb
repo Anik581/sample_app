@@ -9,6 +9,10 @@ describe "Authentication" do
 
 		it { should have_content('Sign in') }
 		it { should have_title('Sign in') }
+		it { should_not have_link('Users', href: users_path) }
+		it { should_not have_link('Profile') }
+		it { should_not have_link('Settings') }
+		it { should_not have_link('Sign out', href: signout_path) }
 	end
 
 	describe "signin" do
@@ -73,9 +77,7 @@ describe "Authentication" do
 			describe "when attempting to visit a protect pages" do
 				before do
 					visit edit_user_path(user)
-					fill_in "Email",			with: user.email
-					fill_in "Password",		with: user.password
-					click_button "Sign in"
+					sign_in user
 				end
 
 				describe "after signing in" do
@@ -100,6 +102,23 @@ describe "Authentication" do
     end
 	end
 
+	describe "as signed-in user" do
+		let(:user) { FactoryGirl.create(:user) }
+		let(:new_user) { FactoryGirl.create(:user, email: "other_email@gmail.com") }
+		before {  sign_in user, no_capybara: true	}
+
+		describe "submitting a GET request to the users#new action" do
+			before { get new_user_path }
+			specify { expect(response.body).not_to match(full_title('Sign up')) }
+			specify { expect(response).to redirect_to(root_url) }
+		end
+
+		describe "submitting a POST request to the users#create action" do
+			before { post users_path(new_user) }
+			specify { expect(response).to redirect_to(root_url) }
+		end
+	end
+
 	describe "as wrong user" do
 		let(:user) { FactoryGirl.create(:user) }
 		let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@gmail.com") }
@@ -118,6 +137,5 @@ describe "Authentication" do
 			specify { expect(response).to redirect_to(root_url) }
 		end
 	end
-
 
 end

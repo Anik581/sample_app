@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :signed_in_user, only: [:index, :edit, :update]
+  before_action :logged_in_user, only: [:new, :create]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user, only: :destroy
 
@@ -58,6 +59,13 @@ class UsersController < ApplicationController
         store_location
         redirect_to signin_url, notice: "Please Sign in."
                         #flash[:notice] = "Please sign in."
+      end
+    end
+
+    def logged_in_user
+      if signed_in?
+        button?('show sign_out button')
+        redirect_to root_url, notice: "Please Sign out, if you want to create a new account."
       end
     end
 

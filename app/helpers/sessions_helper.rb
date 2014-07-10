@@ -39,4 +39,17 @@ module SessionsHelper
 		session[:return_to] = request.url if request.get?
 	end
 
+	def show_button?
+		session[:show_button]
+		session.delete(:show_button)
+	end
+
+	def button?( x = 'hide')
+		if x == 'hide'
+			session[:show_button] = false
+		else
+			session[:show_button] = true
+		end
+	end
+
 end
