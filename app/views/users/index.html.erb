@@ -2,19 +2,15 @@
 <h1>All users</h1>
 
 <%= will_paginate %>
-
 <ul class="users">
 	<%= render @users %> 
 
-<% if false %>
+<!-- 'if false' this is start of multiline-comment in erb   -->
+<% if false %> 
 	<% @users.each do |user| %>
 		<%= render user %>
 	<% end %>
 <% end %>
 
 </ul>
-
-
-
-
 <%= will_paginate %>
