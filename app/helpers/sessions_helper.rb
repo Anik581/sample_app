@@ -24,6 +24,15 @@ module SessionsHelper
 		user == current_user
 	end
 
+	#moved from users_controller for microposts_controller
+	def signed_in_user #construction ':notice' doesn’t work for the :error or :success keys.
+    unless signed_in?
+	    store_location
+	    redirect_to signin_url, notice: "Please Sign in."
+	                      #flash[:notice] = "Please sign in."
+   	end
+  end
+
 	def sign_out
 		current_user.update_attribute(:remember_token, User.digest(User.new_remember_token))
 		cookies.delete(:remember_token)

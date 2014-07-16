@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 			flash[:success] = "Welcome to the Sample App!"
 			redirect_to @user
 		else
-			render 'new'
+			render 'new' # no 'redirect_to signup_url' because validation will not be shown
 		end
   end
 
@@ -55,13 +55,14 @@ class UsersController < ApplicationController
     	params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 
-    def signed_in_user #construction ':notice' doesn’t work for the :error or :success keys.
-      unless signed_in?
-        store_location
-        redirect_to signin_url, notice: "Please Sign in."
+    #moved to session_helper for microposts_controller
+    #def signed_in_user #construction ':notice' doesn’t work for the :error or :success keys.
+      #unless signed_in?
+        #store_location
+        #redirect_to signin_url, notice: "Please Sign in."
                         #flash[:notice] = "Please sign in."
-      end
-    end
+      #end
+    #end
 
     def logged_in_user
       if signed_in?
