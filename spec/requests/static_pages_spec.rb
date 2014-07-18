@@ -47,6 +47,28 @@ describe "Static pages"  do
 				expect(page).to have_selector("li##{item.id}", text: item.content)
 			end
 		end
+
+		it "micropost counts should be plural when count eq to 2 or more" do
+			expect(page).to have_selector('span', text: 'microposts')
+		end
+
+		describe "micropost counts" do
+			before { click_link "delete", match: :first }
+			it "sould be singular when cuont eq 1" do
+				expect(page).to have_selector('span', text: 'micropost')
+			end
+		end
+
+		describe "microposts pagination" do
+			before do
+			 31.times { FactoryGirl.create(:micropost, user: user) }
+			 sign_in user
+			 visit root_path
+			end
+			after { user.microposts.delete_all }
+
+			it { should have_selector('div.pagination') }
+		end
 	end
-	
+
 end

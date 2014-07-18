@@ -125,22 +125,32 @@ describe "Authentication" do
         specify { expect(response).to redirect_to(root_url) }
       end
     end
-	end
 
-	describe "as signed-in user" do
-		let(:user) { FactoryGirl.create(:user) }
-		let(:new_user) { FactoryGirl.create(:user, email: "other_email@gmail.com") }
-		before {  sign_in user, no_capybara: true	}
+    describe "as signed-in user" do
+			let(:user) { FactoryGirl.create(:user) }
+			let(:new_user) { FactoryGirl.create(:user, email: "other_email@gmail.com") }
+			before {  sign_in user, no_capybara: true	}
 
-		describe "submitting a GET request to the users#new action" do
-			before { get new_user_path }
-			specify { expect(response.body).not_to match(full_title('Sign up')) }
-			specify { expect(response).to redirect_to(root_url) }
-		end
+			describe "submitting a GET request to the users#new action" do
+				before { get new_user_path }
+				specify { expect(response.body).not_to match(full_title('Sign up')) }
+				specify { expect(response).to redirect_to(root_url) }
+			end
 
-		describe "submitting a POST request to the users#create action" do
-			before { post users_path(new_user) }
-			specify { expect(response).to redirect_to(root_url) }
+			describe "submitting a POST request to the users#create action" do
+				before { post users_path(new_user) }
+				specify { expect(response).to redirect_to(root_url) }
+			end
+
+			describe "cannot delete other user micropost" do
+				let(:other_user) { FactoryGirl.create(:user) }
+				before do
+					FactoryGirl.create(:micropost, user: other_user)
+					visit user_path(other_user)
+				end
+
+				it { should_not have_link('delete') }
+			end
 		end
 	end
 
