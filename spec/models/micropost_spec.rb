@@ -1,5 +1,5 @@
 require 'spec_helper'
-
+puts "before"
 describe Micropost do
 
 	let(:user) { FactoryGirl.create(:user) }
@@ -16,7 +16,15 @@ describe Micropost do
 	it { should be_valid }
 
 	describe "when user_id is not present" do
-		before { @micropost.user_id = nil }
+		before do
+		  @micropost.user_id = nil
+		  puts "before"
+		  puts "before ins #{@micropost.inspect}"
+		end
+		puts "before"
+
+		puts "after ins #{@micropost.inspect}"
+		puts @micropost.inspect
 
 		it { should_not be_valid }
 	end

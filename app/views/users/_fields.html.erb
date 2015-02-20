@@ -11,3 +11,6 @@
 
 <%= f.label :password_confirmation, "Confirm Password" %>
 <%= f.password_field :password_confirmation %>
+
+	<%= f.label :name, "Max hours for day - 10", id: "display" %>
+	<%= f.range_field :name, in: 1..20, class: "" %>

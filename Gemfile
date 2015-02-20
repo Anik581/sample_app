@@ -13,6 +13,7 @@ group :development,:test do
 	gem 'mysql2'
 	gem 'rspec-rails', '2.13.1' #rspec
 	gem 'guard-rspec', '2.5.0' #guard
+	gem 'better_errors'
 end
 
 group :test do

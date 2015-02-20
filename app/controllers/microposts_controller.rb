@@ -14,7 +14,8 @@ class MicropostsController < ApplicationController
 	end
 
 	def destroy
-		@micropost.destroy
+		#Micropost.find(params[:id]).destroy
+		@micropost.destroy #wtf!
 		redirect_to root_url
 	end
 

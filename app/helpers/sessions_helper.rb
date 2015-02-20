@@ -24,12 +24,12 @@ module SessionsHelper
 		user == current_user
 	end
 
-	#moved from users_controller for microposts_controller
-	def signed_in_user #construction ':notice' doesn’t work for the :error or :success keys.
+	#moved from users_controller for microposts_controller / relationships_controller
+	def signed_in_user #construction 'notice:' doesn’t work for the :error or :success keys.
     unless signed_in?
 	    store_location
 	    redirect_to signin_url, notice: "Please Sign in."
-	                      #flash[:notice] = "Please sign in."
+	                    #flash[:notice] = "Please sign in."
    	end
   end
 

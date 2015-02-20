@@ -48,13 +48,24 @@ describe "Static pages"  do
 			end
 		end
 
+		describe "following/followers counts" do
+			let(:other_user) { FactoryGirl.create(:user) }
+			before do
+				other_user.follow!(user)
+				visit root_path
+			end
+
+			it { should have_link("0 following", 	href: following_user_path(user)) }
+			it { should have_link("1 followers", 	href: followers_user_path(user)) }
+		end
+
 		it "micropost counts should be plural when count eq to 2 or more" do
 			expect(page).to have_selector('span', text: 'microposts')
 		end
 
 		describe "micropost counts" do
 			before { click_link "delete", match: :first }
-			it "sould be singular when cuont eq 1" do
+			it "sould be singular when cuonts eq 1" do
 				expect(page).to have_selector('span', text: 'micropost')
 			end
 		end
